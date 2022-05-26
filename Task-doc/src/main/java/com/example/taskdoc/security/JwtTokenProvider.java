@@ -33,19 +33,4 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
-
-    public String getUserIdFromJWT(String token) {
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-
-        return claims.getSubject();
-    }
-
-    public boolean validateToken(String authToken) {
-        try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }
