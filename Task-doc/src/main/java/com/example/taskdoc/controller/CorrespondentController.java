@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/correnspondent")
+@RequestMapping("/api/correnspondents")
 @Slf4j
 public class CorrespondentController {
 
