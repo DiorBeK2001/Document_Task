@@ -26,11 +26,26 @@ public class JwtTokenProvider {
         Date durationTimeLife = new Date(new Date().getTime() + jwtExpirationInMs);
         return Jwts.builder()
                 .setSubject(String.valueOf(user.getId()))
-                .claim("role", user.getRoles())
-                .claim("Fullname", user.getFullName())
+                .claim("roles", user.getRoles())
+                .claim("password", user.getPassword())
                 .setIssuedAt(new Date())
                 .setExpiration(durationTimeLife)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
+    }
+
+    public String getUserIdFromJWT(String token) {
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+
+        return claims.getSubject();
+    }
+
+    public boolean validateToken(String authToken) {
+        try {
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

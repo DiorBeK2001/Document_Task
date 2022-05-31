@@ -43,9 +43,8 @@ public class AttachmentServiceImpl implements AttachmentService {
                 attachment.setUser(user);
                 attachment.setName(name == null || "null".equals(name) ? multipartFile.getOriginalFilename() : name);
                 attachment.setContentType(multipartFile.getContentType());
-                if (getExt(multipartFile.getOriginalFilename()) == null || multipartFile.getSize() == 0 ||
-                        !multipartFile.getContentType().startsWith("pdf") || !multipartFile.getContentType().startsWith("doc") ||
-                        !multipartFile.getContentType().startsWith("docx")) {
+                if (!((multipartFile.getContentType().startsWith("application/pdf")) || (multipartFile.getContentType().startsWith("application/msword")) ||
+                        (multipartFile.getContentType().startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml.document")))) {
                     log.error("error: {}", multipartFile.getContentType());
                     return ResponseEntity.status(HttpStatus.CONFLICT).body("You sent only pdf or doc or docx file");
                 }
@@ -71,12 +70,14 @@ public class AttachmentServiceImpl implements AttachmentService {
 
                 try {
                     multipartFile.transferTo(file);
-                    resUploadFiles.add(
-                            new ResUploadFile(savedAttachment.getId(), savedAttachment.getName(), savedAttachment.getContentType(),
-                                    savedAttachment.getSize(), ServletUriComponentsBuilder.fromCurrentContextPath()
-                                    .path("api/attachment/byteFile")
-                                    .path(attachment.getId().toString())
-                                    .toUriString()));
+
+                        resUploadFiles.add(
+                                new ResUploadFile(savedAttachment.getId(), savedAttachment.getName(), savedAttachment.getContentType(),
+                                        savedAttachment.getSize(), ServletUriComponentsBuilder.fromCurrentContextPath()
+                                        .path("api/attachment/byteFile")
+                                        .path(attachment.getId().toString())
+                                        .toUriString()));
+
                 } catch (Exception e) {
                     attachmentRepo.delete(savedAttachment);
                     log.error("Error not saved: {}", e.getMessage());

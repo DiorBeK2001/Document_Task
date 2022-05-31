@@ -1,5 +1,6 @@
 package com.example.taskdoc.model.domain;
 
+import com.example.taskdoc.model.dto.DeliveryDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,22 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class FormDelivery {
+public class Delivery extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
+
+    public DeliveryDto map2DTO(){
+        DeliveryDto dto = new DeliveryDto();
+        dto.setId(this.getId());
+        dto.setName(this.getName());
+        return dto;
+    }
+
+    public Delivery(String name) {
+        this.name = name;
+    }
 }

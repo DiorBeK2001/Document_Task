@@ -14,4 +14,6 @@ public interface CorrenspondentService {
     List<Correspondent> getAllCorrespondent();
 
     Correspondent getCorrespondent(Integer id);
+
+    void deleteCorrespondent(Integer id);
 }

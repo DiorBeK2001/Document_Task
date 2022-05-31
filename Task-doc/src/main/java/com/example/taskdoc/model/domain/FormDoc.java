@@ -34,7 +34,7 @@ public class FormDoc extends BaseEntity {
 
     // forma dostavky
     @ManyToOne
-    private FormDelivery formDelivery;
+    private Delivery delivery;
 
     @ManyToOne
     private Correspondent correspondent;

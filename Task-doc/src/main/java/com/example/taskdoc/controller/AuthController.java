@@ -1,9 +1,11 @@
 package com.example.taskdoc.controller;
 
 import com.example.taskdoc.model.domain.User;
+import com.example.taskdoc.model.dto.UserDto;
 import com.example.taskdoc.model.vm.ReqSignIn;
 import com.example.taskdoc.security.JwtTokenProvider;
 import com.example.taskdoc.service.AuthService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/auth")
+@Slf4j
 public class AuthController {
 
     @Autowired
@@ -30,7 +35,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     /**
-     *User login
+     * User login
      */
     @PostMapping("/login")
     public HttpEntity<?> login(@RequestBody ReqSignIn request) {
@@ -41,5 +46,10 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 
+    @PostMapping("/register")
+    public User registerUser(@RequestBody @Valid UserDto dto) {
+        log.debug("success added");
+        return authService.registerUser(dto);
+    }
 
 }

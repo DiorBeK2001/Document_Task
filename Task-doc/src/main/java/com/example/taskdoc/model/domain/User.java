@@ -85,6 +85,16 @@ public class User extends BaseEntity implements UserDetails {
         userDto.setFullName(this.getFullName());
         userDto.setEmail(this.getEmail());
         userDto.setPhoneNumber(this.getPhoneNumber());
+        userDto.setRoles(this.getRoles());
         return userDto;
+    }
+
+    public User(String fullName, String email, String password, String phoneNumber, Set<Role> roles, boolean enabled) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.roles = roles;
+        this.enabled = enabled;
     }
 }

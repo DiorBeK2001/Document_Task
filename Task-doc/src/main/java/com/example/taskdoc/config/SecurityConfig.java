@@ -18,8 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 
 @Configuration
@@ -98,7 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**"
                 )
                 .permitAll()
-                .antMatchers("/api/auth/**","/api/giveCredit/**")
+                .antMatchers("/api/attachment/**", "/api/correnspondent/**", "/api/correnspondent")
                 .permitAll()
 //                .antMatchers(HttpMethod.POST,"/api/auth/registerUser")
 //                .permitAll()

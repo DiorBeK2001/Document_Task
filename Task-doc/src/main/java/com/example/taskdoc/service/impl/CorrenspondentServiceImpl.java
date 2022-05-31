@@ -24,7 +24,7 @@ public class CorrenspondentServiceImpl implements CorrenspondentService {
             log.debug("success saved");
             return correnspondentRepo.save(dto.map2Entity());
         } catch (Exception e) {
-            log.error("error: {}", e.getMessage());
+            log.error("Error: {}", e.getMessage());
             return new Correspondent();
         }
     }
@@ -33,6 +33,9 @@ public class CorrenspondentServiceImpl implements CorrenspondentService {
     public Correspondent editCorrespondent(Integer id, CorrenspondentDto dto) {
         try {
             Correspondent correspondent = correnspondentRepo.findById(id).orElseThrow(() -> new ResolutionException("getID"));
+            if (correspondent.getName().equals(dto.getName())){
+                log.error("This name already exist: {}", correspondent.getName());
+            }
             correspondent.setName(dto.getName());
             log.debug("success edited");
             return correnspondentRepo.save(correspondent);
@@ -50,7 +53,22 @@ public class CorrenspondentServiceImpl implements CorrenspondentService {
 
     @Override
     public Correspondent getCorrespondent(Integer id) {
-        log.debug("OK");
-        return correnspondentRepo.findById(id).orElseThrow();
+        try {
+            log.debug("OK");
+            return correnspondentRepo.findById(id).orElseThrow(() -> new ResolutionException("getID"));
+        } catch (Exception e){
+            log.error("Error: {}", e.getMessage());
+            return new Correspondent();
+        }
+    }
+
+    @Override
+    public void deleteCorrespondent(Integer id) {
+        try {
+            log.debug("deleted");
+            correnspondentRepo.deleteById(id);
+        } catch (Exception e){
+            log.error("not deleted");
+        }
     }
 }

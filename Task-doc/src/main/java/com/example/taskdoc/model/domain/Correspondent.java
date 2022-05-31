@@ -28,4 +28,8 @@ public class Correspondent extends BaseEntity{
         dto.setName(this.getName());
         return dto;
     }
+
+    public Correspondent(String name) {
+        this.name = name;
+    }
 }
